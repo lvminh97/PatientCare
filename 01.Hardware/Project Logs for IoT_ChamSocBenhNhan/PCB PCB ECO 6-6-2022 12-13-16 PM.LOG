@@ -1,0 +1,5 @@
+Removed Pin From Net: NetName=NetP2_1 Pin=RL1-1
+Removed Pin From Net: NetName=+12.0V Pin=RL1-3
+Change Component Footprint: Designator=L1 Old Footprint=CDRH104 New Footprint=L-0805
+Added Pin To Net: NetName=NetP2_1 Pin=RL1-3
+Added Room: Name=sheet1

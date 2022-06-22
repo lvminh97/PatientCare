@@ -1,0 +1,5 @@
+Removed Pin From Net: NetName=TXD Pin=J2-4
+Removed Pin From Net: NetName=RXD Pin=J2-8
+Added Pin To Net: NetName=RXD Pin=J2-4
+Added Pin To Net: NetName=TXD Pin=J2-8
+Added Room: Name=sheet1

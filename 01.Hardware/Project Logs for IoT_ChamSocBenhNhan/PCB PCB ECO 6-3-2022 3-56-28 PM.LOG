@@ -1,0 +1,26 @@
+Added Component: Designator=RL2(RELAY5)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "ComponentLink1Description"; Value = "Digikey Part Link"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink1URL"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink2Description"; Value = "Open Datasheet"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink2URL"; Value = "H:\LIBRARY\LIBRARY.Datasheet\"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer P/N"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Published"; Value = "13-April-2009"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Publisher"; Value = "Hoang Nguyen"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Vendor"; Value = "Digikey"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Vendor P/N"; Value = ""; VariantName = "[No Variations]"
+Added Component: Designator=U6(ESP8266)
+Add component. Clean all parameters for all variants
+Added Pin To Net: NetName=NetP3_1 Pin=RL2-1
+Added Pin To Net: NetName=+12.0V Pin=RL2-3
+Added Pin To Net: NetName=NetD3_1 Pin=RL2-4
+Added Pin To Net: NetName=+5.0V Pin=RL2-5
+Added Pin To Net: NetName=ESP_TX Pin=U6-1
+Added Pin To Net: NetName=+3.3V Pin=U6-2
+Added Pin To Net: NetName=NetR6_2 Pin=U6-3
+Added Pin To Net: NetName=+3.3V Pin=U6-4
+Added Pin To Net: NetName=ESP_RX Pin=U6-5
+Added Pin To Net: NetName=GND Pin=U6-8
+Added Member To Class: ClassName=sheet1 Member=Component RL2 RELAY5V
+Added Member To Class: ClassName=sheet1 Member=Component U6 ESP-01

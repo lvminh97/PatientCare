@@ -1,0 +1,16 @@
+Removed Pin From Net: NetName=+5.0V Pin=RV1-1
+Removed Pin From Net: NetName=L_V0 Pin=RV1-2
+Removed Pin From Net: NetName=GND Pin=RV1-3
+Removed Member From Class: ClassName=sheet1 Member=RV1
+Added Component: Designator=VR1(VRes-R)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "LatestRevisionDate"; Value = "17-Jul-2002"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "LatestRevisionNote"; Value = "Re-released for DXP Platform."; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PackageReference"; Value = "AXIAL-0.3"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Published"; Value = "8-Jun-2000"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Publisher"; Value = "Altium Limited"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=GND Pin=VR1-1
+Added Pin To Net: NetName=L_V0 Pin=VR1-2
+Added Pin To Net: NetName=+5.0V Pin=VR1-3
+Added Member To Class: ClassName=sheet1 Member=Component VR1 50k
+Added Room: Name=sheet1

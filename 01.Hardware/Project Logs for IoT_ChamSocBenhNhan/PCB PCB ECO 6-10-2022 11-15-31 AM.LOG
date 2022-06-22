@@ -1,0 +1,5 @@
+Removed Pin From Net: NetName=E_CFG Pin=U4-2
+Removed Pin From Net: NetName=E_RST Pin=U4-9
+Added Pin To Net: NetName=E_RST Pin=U4-2
+Added Pin To Net: NetName=E_CFG Pin=U4-9
+Added Room: Name=sheet1
