@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "410316525929",
+    "project_id": "iot-chamsocbenhnhan",
+    "storage_bucket": "iot-chamsocbenhnhan.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:410316525929:android:ce114119ae47e8cfca6df8",
+        "android_client_info": {
+          "package_name": "com.example.patient_care"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "410316525929-qjucn2nuttujq4dh9sv0hop4mqj0av1h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAL7a09AI2zKaw199PRBsBKNIirM7E3OGU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "410316525929-qjucn2nuttujq4dh9sv0hop4mqj0av1h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
