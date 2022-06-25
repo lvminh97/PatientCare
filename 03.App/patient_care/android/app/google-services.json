@@ -1,33 +1,34 @@
 {
   "project_info": {
-    "project_number": "410316525929",
-    "project_id": "iot-chamsocbenhnhan",
-    "storage_bucket": "iot-chamsocbenhnhan.appspot.com"
+    "project_number": "1048855928996",
+    "firebase_url": "https://patientcare-59fee-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "patientcare-59fee",
+    "storage_bucket": "patientcare-59fee.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:410316525929:android:ce114119ae47e8cfca6df8",
+        "mobilesdk_app_id": "1:1048855928996:android:34b375cf1a4f205a9d8631",
         "android_client_info": {
           "package_name": "com.example.patient_care"
         }
       },
       "oauth_client": [
         {
-          "client_id": "410316525929-qjucn2nuttujq4dh9sv0hop4mqj0av1h.apps.googleusercontent.com",
+          "client_id": "1048855928996-akvueflej980jhtqh6squ2eih5h05v81.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAL7a09AI2zKaw199PRBsBKNIirM7E3OGU"
+          "current_key": "AIzaSyBFk52ktG9OqQxjVA4gDlSkNQxxNxFr42s"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "410316525929-qjucn2nuttujq4dh9sv0hop4mqj0av1h.apps.googleusercontent.com",
+              "client_id": "1048855928996-akvueflej980jhtqh6squ2eih5h05v81.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
