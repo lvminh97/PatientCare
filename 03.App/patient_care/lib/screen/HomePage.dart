@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:patient_care/config.dart';
+import 'package:patient_care/widget/MyDrawer.dart';
 
 class HomePage extends StatefulWidget {
   
@@ -48,16 +49,6 @@ class HomePageState extends State<HomePage> {
         Config.params['SOS'] = int.parse(event.snapshot.value.toString());
       });
     });
-    Config.refs['RELAY1']!.onValue.listen((event) {
-      setState(() {
-        Config.params['RELAY1'] = int.parse(event.snapshot.value.toString());
-      });
-    });
-    Config.refs['RELAY2']!.onValue.listen((event) {
-      setState(() {
-        Config.params['RELAY2'] = int.parse(event.snapshot.value.toString());
-      });
-    });
   }
 
   @override
@@ -65,6 +56,7 @@ class HomePageState extends State<HomePage> {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
+        appBar: AppBar(),
         body: Center(
           child: Column(
             children: [
@@ -355,79 +347,10 @@ class HomePageState extends State<HomePage> {
                   )
                 ],
               ),
-              // RELAY 1
-              Container(
-                margin: const EdgeInsets.fromLTRB(20, 40, 15, 20),
-                child: Row(
-                  children: [
-                    TextButton(
-                      onPressed: () {},
-                      style: ButtonStyle(
-                        foregroundColor: MaterialStateProperty.all<Color>(Colors.black),
-                        backgroundColor: Config.params['RELAY1'] == 1 
-                                        ? MaterialStateProperty.all<Color>(Colors.blue)
-                                        : MaterialStateProperty.all<Color>(Colors.red)
-                      ), 
-                      child: const Padding(
-                        padding: EdgeInsets.fromLTRB(40, 10, 40, 10),
-                        child: Text(
-                          "Relay 1"
-                        ),
-                      )
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(
-                        left: 40
-                      ),
-                      child: Text(
-                        Config.params['RELAY1'] == 1 ? "Bật" : "Tắt",
-                        style: const TextStyle(
-                          fontSize: 25,
-                          fontWeight: FontWeight.w800
-                        )
-                      )
-                    )
-                  ],
-                ),
-              ),
-              // RELAY 2
-              Container(
-                margin: const EdgeInsets.fromLTRB(20, 10, 15, 20),
-                child: Row(
-                  children: [
-                    TextButton(
-                      onPressed: () {},
-                      style: ButtonStyle(
-                        foregroundColor: MaterialStateProperty.all<Color>(Colors.black),
-                        backgroundColor: Config.params['RELAY2'] == 1 
-                                        ? MaterialStateProperty.all<Color>(Colors.blue)
-                                        : MaterialStateProperty.all<Color>(Colors.red)
-                      ), 
-                      child: const Padding(
-                        padding: EdgeInsets.fromLTRB(40, 10, 40, 10),
-                        child: Text(
-                          "Relay 2"
-                        ),
-                      )
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(
-                        left: 40
-                      ),
-                      child: Text(
-                        Config.params['RELAY2'] == 1 ? "Bật" : "Tắt",
-                        style: const TextStyle(
-                          fontSize: 25,
-                          fontWeight: FontWeight.w800
-                        )
-                      )
-                    )
-                  ],
-                ),
-              )
             ],
           ),
         ),
+        drawer: MyDrawer(DrawerSelection.param),
       ),
     );
   }

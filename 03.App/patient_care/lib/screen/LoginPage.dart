@@ -42,6 +42,7 @@ class LoginPageState extends State<LoginPage> {
 
       EasyLoading.dismiss();
       Config.paramInit();
+      // ignore: use_build_context_synchronously
       Navigator.push(context, MaterialPageRoute(builder: (context) => const HomePage()));
     } on FirebaseAuthException catch(e){
       // print("Login error: " + e.code);
