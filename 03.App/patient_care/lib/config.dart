@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:firebase_database/firebase_database.dart';
 import 'dart:collection';
 
@@ -8,13 +6,13 @@ class Config{
   static String email = "";
   // static List<DatabaseReference> refs = [];
   static HashMap<String, DatabaseReference> refs = HashMap<String, DatabaseReference>();
+  static List<String> paramName = ["Heart", "SpO2", "Air_Temp", "Air_Humi", "Body_Temp"];
   static HashMap<String, int> params = HashMap<String, int>();
 
   static void paramInit() async{
-    refs['Heart'] = FirebaseDatabase.instance.ref("$uid/Heart");
-    refs['SpO2'] = FirebaseDatabase.instance.ref("$uid/SpO2");
-
-    params['Heart'] = 0;
-    params['SpO2'] = 0;
+    for(int i = 0; i < paramName.length; i++){
+      refs[paramName[i]] = FirebaseDatabase.instance.ref("$uid/${paramName[i]}");
+      params[paramName[i]] = 0;
+    }
   }
 }
