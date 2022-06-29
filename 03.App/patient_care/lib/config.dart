@@ -6,7 +6,7 @@ class Config{
   static String email = "";
   // static List<DatabaseReference> refs = [];
   static HashMap<String, DatabaseReference> refs = HashMap<String, DatabaseReference>();
-  static List<String> paramName = ["Heart", "SpO2", "Air_Temp", "Air_Humi", "Body_Temp"];
+  static List<String> paramName = ["Heart", "SpO2", "Air_Temp", "Air_Humi", "Body_Temp", "SOS", "RELAY1", "RELAY2"];
   static HashMap<String, int> params = HashMap<String, int>();
 
   static void paramInit() async{
