@@ -49,7 +49,7 @@ class MyDrawer extends StatelessWidget{
           ),
           ListTile(
             selected: _drawerSelection == DrawerSelection.param,
-            title: const Text('Dữ liệu'),
+            title: const Text('Giám sát'),
             leading: const Icon(Icons.home, size: 25),
             onTap: () {
               if(_drawerSelection != DrawerSelection.param){

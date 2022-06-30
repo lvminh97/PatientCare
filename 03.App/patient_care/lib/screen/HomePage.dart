@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:patient_care/config.dart';
+import 'package:patient_care/widget/Header.dart';
 import 'package:patient_care/widget/MyDrawer.dart';
+import 'package:patient_care/widget/ParamView.dart';
 
 class HomePage extends StatefulWidget {
   
@@ -60,105 +62,29 @@ class HomePageState extends State<HomePage> {
         body: Center(
           child: Column(
             children: [
-              Container(
-                margin: const EdgeInsets.only(
-                  top: 50
-                )
-              ),
+              MyHeader("Giám sát"),
               // Air temperature and humidity
               Row(
                 children: [
                   Expanded(
                     flex: 5,
-                    child: Row(
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.fromLTRB(20, 20, 15, 20),
-                          child: const Image(
-                            image: AssetImage("assets/images/temp.png"),
-                            width: 70,
-                            height: 90,
-                          ),
-                        ),
-                        Container(
-                          margin: const EdgeInsets.fromLTRB(0, 20, 20, 20),
-                          child: Column(
-                            children: [
-                              Container(
-                                margin: const EdgeInsets.only(
-                                  top: 0
-                                ),
-                                child: const Text(
-                                  "Nhiệt độ",
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold
-                                  ),
-                                )
-                              ),
-                              Container(
-                                margin: const EdgeInsets.only(
-                                  top: 10
-                                ),
-                                child: Text(
-                                  "${Config.params['Air_Temp']}°C",
-                                  style: const TextStyle(
-                                    fontSize: 25,
-                                    fontWeight: FontWeight.w800
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                        )
-                      ],
+                    child: ParamView(
+                      "assets/images/temp.png",
+                      "Air_Temp",
+                      "°C",
+                      "Nhiệt độ",
+                      const [20, 10, 15, 20]
                     ),
                   ),
                   Expanded(
                     flex: 5,
-                    child: Row(
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.fromLTRB(20, 20, 15, 20),
-                          child: const Image(
-                            image: AssetImage("assets/images/humi.png"),
-                            width: 70,
-                            height: 90,
-                          ),
-                        ),
-                        Container(
-                          margin: const EdgeInsets.fromLTRB(0, 20, 20, 20),
-                          child: Column(
-                            children: [
-                              Container(
-                                margin: const EdgeInsets.only(
-                                  top: 0
-                                ),
-                                child: const Text(
-                                  "Độ ẩm",
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold
-                                  ),
-                                )
-                              ),
-                              Container(
-                                margin: const EdgeInsets.only(
-                                  top: 10
-                                ),
-                                child: Text(
-                                  "${Config.params['Air_Humi']}%",
-                                  style: const TextStyle(
-                                    fontSize: 25,
-                                    fontWeight: FontWeight.w800
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                        )
-                      ],
-                    )
+                    child: ParamView(
+                      "assets/images/humi.png",
+                      "Air_Humi",
+                      "%",
+                      "Độ ẩm",
+                      const [20, 10, 15, 20]
+                    ),
                   )
                 ],
               ),
@@ -167,141 +93,33 @@ class HomePageState extends State<HomePage> {
                 children: [
                   Expanded(
                     flex: 5,
-                    child: Row(
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.fromLTRB(20, 10, 15, 20),
-                          child: const Image(
-                            image: AssetImage("assets/images/heart_rate.png"),
-                            width: 70,
-                            height: 90,
-                          ),
-                        ),
-                        Container(
-                          margin: const EdgeInsets.fromLTRB(0, 10, 20, 20),
-                          child: Column(
-                            children: [
-                              Container(
-                                margin: const EdgeInsets.only(
-                                  top: 0
-                                ),
-                                child: const Text(
-                                  "Nhịp tim",
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold
-                                  ),
-                                )
-                              ),
-                              Container(
-                                margin: const EdgeInsets.only(
-                                  top: 10
-                                ),
-                                child: Text(
-                                  Config.params['Heart'] .toString(),
-                                  style: const TextStyle(
-                                    fontSize: 25,
-                                    fontWeight: FontWeight.w800
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                        )
-                      ],
+                    child: ParamView(
+                      "assets/images/heart_rate.png",
+                      "Heart",
+                      "",
+                      "Nhịp tim",
+                      const [20, 10, 15, 20]
                     ),
                   ),
                   Expanded(
                     flex: 5,
-                    child: Row(
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.fromLTRB(20, 10, 15, 20),
-                          child: const Image(
-                            image: AssetImage("assets/images/spo2.png"),
-                            width: 70,
-                            height: 90,
-                          ),
-                        ),
-                        Container(
-                          margin: const EdgeInsets.fromLTRB(0, 10, 20, 20),
-                          child: Column(
-                            children: [
-                              Container(
-                                margin: const EdgeInsets.only(
-                                  top: 0
-                                ),
-                                child: const Text(
-                                  "SpO2",
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold
-                                  ),
-                                )
-                              ),
-                              Container(
-                                margin: const EdgeInsets.only(
-                                  top: 10
-                                ),
-                                child: Text(
-                                  "${Config.params['SpO2']}%",
-                                  style: const TextStyle(
-                                    fontSize: 25,
-                                    fontWeight: FontWeight.w800
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                        )
-                      ],
+                    child: ParamView(
+                      "assets/images/spo2.png",
+                      "SpO2",
+                      "%",
+                      "SpO2",
+                      const [20, 10, 15, 20]
                     )
                   )
                 ],
               ),
               // Body temperature
-              Row(
-                children: [
-                  Container(
-                    margin: const EdgeInsets.fromLTRB(20, 10, 15, 20),
-                    child: const Image(
-                      image: AssetImage("assets/images/body_temp.png"),
-                      width: 70,
-                      height: 90,
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.fromLTRB(0, 10, 20, 20),
-                    child: Column(
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.only(
-                            top: 0
-                          ),
-                          child: const Text(
-                            "Nhiệt độ cơ thể",
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold
-                            ),
-                          )
-                        ),
-                        Container(
-                          margin: const EdgeInsets.only(
-                            top: 10
-                          ),
-                          child: Text(
-                            "${Config.params['Body_Temp']}°C",
-                            style: const TextStyle(
-                              fontSize: 25,
-                              fontWeight: FontWeight.w800
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  )
-                ],
+              ParamView(
+                "assets/images/body_temp.png",
+                "Body_Temp",
+                "°C",
+                "Nhiệt độ cơ thể",
+                const [20, 10, 15, 20]
               ),
               // SOS status
               Row(
