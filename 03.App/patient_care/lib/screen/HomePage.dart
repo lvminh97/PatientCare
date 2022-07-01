@@ -122,49 +122,15 @@ class HomePageState extends State<HomePage> {
                 const [20, 10, 15, 20]
               ),
               // SOS status
-              Row(
-                children: [
-                  Container(
-                    margin: const EdgeInsets.fromLTRB(20, 10, 15, 20),
-                    child: const Image(
-                      image: AssetImage("assets/images/sos.png"),
-                      width: 70,
-                      height: 90,
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.fromLTRB(0, 10, 20, 20),
-                    child: Column(
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.only(
-                            top: 0
-                          ),
-                          child: const Text(
-                            "Tình trạng khẩn cấp",
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold
-                            ),
-                          )
-                        ),
-                        Container(
-                          margin: const EdgeInsets.only(
-                            top: 10
-                          ),
-                          child: Text(
-                            Config.params['SOS'] == 1 ? "Có" : "Không",
-                            style: const TextStyle(
-                              fontSize: 25,
-                              fontWeight: FontWeight.w800
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  )
-                ],
-              ),
+              ParamView(
+                "assets/images/sos.png",
+                "SOS",
+                "",
+                "Tình trạng khẩn cấp",
+                const [20, 10, 15, 20],
+                type: "string",
+                altValue: const ["Không", "Có"],
+              )
             ],
           ),
         ),
@@ -172,5 +138,4 @@ class HomePageState extends State<HomePage> {
       ),
     );
   }
-
 }

@@ -77,12 +77,38 @@ class MyDrawer extends StatelessWidget{
             title: const Text('Đăng xuất'),
             leading: const Icon(Icons.logout, size: 25),
             onTap: () async{
-              final prefs = await SharedPreferences.getInstance();
-              await prefs.remove("password");
-              // ignore: use_build_context_synchronously
-              Navigator.push(
-                context, 
-                MaterialPageRoute(builder: (context) => const LoginPage())
+              showDialog(
+                context: context, 
+                builder: (_) => AlertDialog(
+                  content: const Text("Bạn muốn đăng xuất?"),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      }, 
+                      child: const Text(
+                        "Bỏ qua",
+                        style: TextStyle(
+                          color: Colors.grey
+                        ),
+                      )
+                    ),
+                    TextButton(
+                      onPressed: () async {
+                        final prefs = await SharedPreferences.getInstance();
+                        await prefs.remove("password");
+                        // ignore: use_build_context_synchronously
+                        Navigator.push(
+                          context, 
+                          MaterialPageRoute(builder: (context) => const LoginPage())
+                        );
+                      }, 
+                      child: const Text(
+                        "Đăng xuất"
+                      )
+                    )
+                  ],
+                ),
               );
             },
           )

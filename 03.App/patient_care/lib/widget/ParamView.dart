@@ -9,18 +9,23 @@ class ParamView extends StatelessWidget{
   String _unit = "";
   String _title = "";
   List<double> _margins = [0, 0, 0, 0];
+  String _type = "";
+  List<String> _altValue = [];
 
   ParamView(String img, 
   String paramName,
   String unit,
   String title,
   List<double> margins, 
-  {Key? key}): super(key: key) {
+  {String type = "int", List<String> altValue = const[], Key? key}): super(key: key) {
     _img = img;
     _paramName = paramName;
     _unit = unit;
     _title = title;
     _margins = margins;
+    // optional params
+    _type = type;
+    _altValue = altValue;
   }
 
   @override
@@ -58,7 +63,9 @@ class ParamView extends StatelessWidget{
                     top: 10
                   ),
                   child: Text(
-                    "${Config.params[_paramName]}$_unit",
+                    _type == "int" 
+                      ? "${Config.params[_paramName]}$_unit"
+                      : (Config.params[_paramName] != null ? _altValue[Config.params[_paramName]!] : ""),
                     style: const TextStyle(
                       fontSize: 25,
                       fontWeight: FontWeight.w800

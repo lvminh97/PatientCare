@@ -49,7 +49,7 @@ class ControlPageState extends State<ControlPage> {
                 )
               ),
               ControlButton("RELAY1", "Relay 1", const [20, 15]),
-              ControlButton("RELAY2", "Relay2", const [20, 15])
+              ControlButton("RELAY2", "Relay 2", const [20, 15])
             ],
           ),
         ),
@@ -57,5 +57,4 @@ class ControlPageState extends State<ControlPage> {
       ),
     );
   }
-
 }

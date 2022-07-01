@@ -17,7 +17,7 @@ class ControlButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.fromLTRB(40, _margins[0], 15, _margins[1]),
+      margin: EdgeInsets.fromLTRB(60, _margins[0], 15, _margins[1]),
       child: Row(
         children: [
           TextButton(
