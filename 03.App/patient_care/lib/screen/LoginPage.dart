@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:patient_care/config.dart';
+import 'package:patient_care/screen/HomePage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
@@ -40,8 +41,9 @@ class LoginPageState extends State<LoginPage> {
       await prefs.setString("password", _passwordTxtCtrl.text);
 
       EasyLoading.dismiss();
-      // Config.paramInit();
-      // Navigator.push(context, MaterialPageRoute(builder: (context) => const HomePage(title: "Điều khiển")));
+      Config.paramInit();
+      // ignore: use_build_context_synchronously
+      Navigator.push(context, MaterialPageRoute(builder: (context) => const HomePage()));
     } on FirebaseAuthException catch(e){
       // print("Login error: " + e.code);
       if(e.code == "user-not-found"){
