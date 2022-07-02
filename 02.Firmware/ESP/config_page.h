@@ -1,5 +1,5 @@
-#ifndef INDEX_H
-#define INDEX_H
+#ifndef CONFIG_PAGE_H
+#define CONFIG_PAGE_H
 
 const char index_page[] PROGMEM = R"=====(
 <html>
@@ -8,11 +8,11 @@ const char index_page[] PROGMEM = R"=====(
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 form{
-  width: 400px; 
+  width: 60vw; 
   margin: auto; 
-  margin-top: 180px; 
-  padding-left: 50px;
-  padding-right: 50px;
+  margin-top: 20vh; 
+  padding-left: 5vw;
+  padding-right: 5vw;
   border: solid 8px #fd5050; 
   border-radius: 20px;
   text-align: center;
@@ -22,7 +22,7 @@ h1{
   margin-bottom: 50px
 }
 .inp{
-  width: 300px;
+  width: 90%;
   height: 30px;
   margin-bottom: 15px;
 }
@@ -45,8 +45,7 @@ h1{
 <h1>WIFI CONFIG</h1>
 <input name="ssid" placeholder="WIFI SSID" class="inp">
 <input type="password" name="pass" placeholder="WIFI PASSWORD" class="inp">
-<input name="server" placeholder="SERVER ADDRESS" class="inp" style="width: 220px; margin-right: 20px">
-<input name="port" placeholder="PORT" class="inp" style="width: 60px">
+<input name="uid" placeholder="DEVICE ID" class="inp">
 <button type="submit" class="btn">Save</button>
 </form>
 </body>
