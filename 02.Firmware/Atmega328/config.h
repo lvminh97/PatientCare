@@ -1,6 +1,7 @@
 #ifndef _CONFIG_H
 #define _CONFIG_H
 
+// GPIO mapping
 #define RELAY1  A1
 #define RELAY2  A2
 
@@ -13,10 +14,29 @@
 
 #define ESP_RST 4
 #define ESP_CFG 5
+#define ESP_TX  2
+#define ESP_RX  A3
 
-#define RELAY1_ON   digitalWrite(RELAY1, HIGH)
-#define RELAY1_OFF  digitalWrite(RELAY1, LOW)
-#define RELAY2_ON   digitalWrite(RELAY2, HIGH)
-#define RELAY2_OFF  digitalWrite(RELAY2, LOW)
+#define DHT_PIN 7
+#define LM35    A0
+#define SOS     3
+
+// GPIO macro
+#define RELAY1_SET(x)   digitalWrite(RELAY1, x)
+#define RELAY2_SET(x)   digitalWrite(RELAY2, x)
+
+#define ESP_RST_SET(x)    digitalWrite(ESP_RST, x)   
+
+// Function
+void gpioInit(){
+  pinMode(RELAY1, OUTPUT);
+  pinMode(RELAY2, OUTPUT);
+  pinMode(ESP_RST, OUTPUT);
+  pinMode(ESP_CFG, INPUT);
+
+  ESP_RST_SET(1);    // ESP reset function is implemented by ext command now, so this pin is kept high
+  RELAY1_SET(0);
+  RELAY2_SET(0);
+}
 
 #endif
