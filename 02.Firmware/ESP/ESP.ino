@@ -4,7 +4,7 @@
 #include <FirebaseArduino.h>
 #include "config_page.h"
 
-#define DEBUG     true
+#define DEBUG     false
 
 #define FIREBASE_HOST "patientcare-59fee-default-rtdb.asia-southeast1.firebasedatabase.app"
 #define FIREBASE_AUTH "V4eaCNzjq3KyRepANQjgUznwQ3EAZKpYHpG4veDp"
@@ -13,9 +13,9 @@
 char ESPSSID[20]  = "ESP1457728";
 char ESPPASS[20]  = "123456789";
 // WiFi info for connecting
-char WIFI_SSID[20];
-char WIFI_PASS[20];
-char UID[30]      = "Z27krdkzL8S3v9itCNsq9XPEsZr2";
+char WIFI_SSID[25] = "";
+char WIFI_PASS[25] = "";
+char UID[35] = "";
 
 ESP8266WebServer server(80);
 WiFiClient esp;
@@ -38,21 +38,6 @@ void setup() {
   initParam();
   WiFi.mode(WIFI_AP_STA);
   WiFi.softAP(ESPSSID, ESPPASS);
-  WiFi.begin(WIFI_SSID, WIFI_PASS);
-  wifiTmout = 0;
-  while (WiFi.status() != WL_CONNECTED && wifiTmout < 12) {
-#if DEBUG  
-    Serial.print(".");
-#endif
-    wifiTmout++;
-    delay(500);
-  }
-#if DEBUG
-  if(WiFi.status() == WL_CONNECTED){
-    Serial.println("Wifi connected");
-    Serial.println(WiFi.localIP());
-  }
-#endif
   server.on("/", get_index_page);
   server.on("/save_config", save_config);
   server.on("/get_config", get_config);
@@ -62,10 +47,12 @@ void setup() {
 void loop() {
   checkReceiveCommand();
   if(isConfigMode == true){   // in config mode
-    server.handleClient();
-    delay(5);
+    if(wifi_softap_get_station_num() > 0){
+      server.handleClient();
+      delay(5);
+    }
   }
-  else{   // normal mode
+  else if(WiFi.status() == WL_CONNECTED){   // normal mode
     if(millis() - updateTime >= 1000){
       outBuff[2] = 0x83;
       outBuff[3] = Firebase.getInt(UID + String("/RELAY1"));
@@ -98,14 +85,25 @@ void save_config(){
   server.send(200, "text/plain", "Saved successful!");
   // Save wifi information
   if(server.arg("ssid").length() > 0){
-    WiFi.begin(server.arg("ssid"), server.arg("pass"));
-  }
-  // Save server name
-  if(server.arg("uid").length() > 0){
-    for(i = 0; i < server.arg("uid").length(); i++){
-      EEPROM.write(i, server.arg("uid")[i]);
+    for(i = 0; i < server.arg("ssid").length(); i++){
+      EEPROM.write(i, (char) server.arg("ssid")[i]);
     }
     EEPROM.write(i, 0);
+    EEPROM.commit();
+  }
+  if(server.arg("pass").length() > 0){
+    for(i = 0; i < server.arg("pass").length(); i++){
+      EEPROM.write(i + 25, (char) server.arg("pass")[i]);
+    }
+    EEPROM.write(i + 25, 0);
+    EEPROM.commit();
+  }
+  // Save device ID
+  if(server.arg("uid").length() > 0){
+    for(i = 0; i < server.arg("uid").length(); i++){
+      EEPROM.write(i + 50, (char) server.arg("uid")[i]);
+    }
+    EEPROM.write(i + 50, 0);
     EEPROM.commit();
   }
   // End config mode
@@ -114,14 +112,14 @@ void save_config(){
   outBuff[2] = 0x81;
   outBuff[3] = 0x82;
   sendCommand(outBuff, 4);  // notify to MCU when finish config mode
-  server.stop();
+  server.close();
 #if DEBUG
   Serial.println("Finish config mode");
 #endif
 }
 
 void get_config(){
-  server.send(200, "text/plain", String("Server config: WIFI ") + String(WIFI_SSID) + String("/") + String(WIFI_PASS));
+  server.send(200, "text/plain", String("Server config:\nWIFI-SSID: ") + String(WIFI_SSID) + String("\nWIFI_PASS: ") + String(WIFI_PASS) + String("\nUID:") + String(UID));
 }
 
 void initParam(){
@@ -149,6 +147,31 @@ void initParam(){
     i++;
   }
   UID[i] = 0;
+#if DEBUG
+  Serial.println("Init param...");
+  Serial.println(WIFI_SSID);
+  Serial.println(WIFI_PASS);
+  Serial.println(UID);
+  Serial.println("====================");
+#endif
+}
+
+void connectWiFi(){
+  WiFi.begin(WIFI_SSID, WIFI_PASS);
+  wifiTmout = 0;
+  while (WiFi.status() != WL_CONNECTED && wifiTmout < 20) {
+#if DEBUG  
+    Serial.print(".");
+#endif
+    wifiTmout++;
+    delay(500);
+  }
+#if DEBUG
+  if(WiFi.status() == WL_CONNECTED){
+    Serial.println("Wifi connected");
+    Serial.println(WiFi.localIP());
+  }
+#endif
 }
 
 void processCommand(){
@@ -174,13 +197,19 @@ void processCommand(){
           Serial.println("Exit Wifi config mode");
 #endif          
           isConfigMode = false;
-          server.stop();
+          server.close();
         }
         else if(inBuff[3] == 0x83){   // Reset ESP8266
           ESP.reset();
         }
         else if(inBuff[3] == 0x84){   // Get Wifi connection status
-          
+          outBuff[2] = 0x81;
+          outBuff[3] = 0x84;
+          outBuff[4] = WiFi.status();
+          sendCommand(outBuff, 5);
+        }
+        else if(inBuff[3] == 0x85){
+          connectWiFi();
         }
         break;
       case 0x82:

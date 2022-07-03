@@ -43,9 +43,9 @@ h1{
 <body>
 <form method="POST" action="/save_config">
 <h1>WIFI CONFIG</h1>
-<input name="ssid" placeholder="WIFI SSID" class="inp">
-<input type="password" name="pass" placeholder="WIFI PASSWORD" class="inp">
-<input name="uid" placeholder="DEVICE ID" class="inp">
+<input name="ssid" placeholder="WIFI SSID" class="inp" value="">
+<input type="password" name="pass" placeholder="WIFI PASSWORD" class="inp" value="">
+<input name="uid" placeholder="DEVICE ID" class="inp" value="">
 <button type="submit" class="btn">Save</button>
 </form>
 </body>
