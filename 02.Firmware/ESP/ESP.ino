@@ -20,8 +20,8 @@ char UID[35] = "";
 ESP8266WebServer server(80);
 WiFiClient esp;
 
-char inBuff[40];
-char outBuff[40] = {0x84, 0xF0};
+unsigned char inBuff[40];
+unsigned char outBuff[40] = {0x84, 0xF0};
 int buffPos = 0;
 
 bool isConfigMode = false;
