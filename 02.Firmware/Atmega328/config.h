@@ -25,7 +25,10 @@
 #define RELAY1_SET(x)   digitalWrite(RELAY1, x)
 #define RELAY2_SET(x)   digitalWrite(RELAY2, x)
 
-#define ESP_RST_SET(x)    digitalWrite(ESP_RST, x)   
+#define ESP_RST_SET(x)    digitalWrite(ESP_RST, x)  
+
+#define ESP_CFG_GET       digitalRead(ESP_CFG)
+#define SOS_GET           digitalRead(SOS)
 
 // Function
 void gpioInit(){
