@@ -20,8 +20,8 @@ char UID[35] = "";
 ESP8266WebServer server(80);
 WiFiClient esp;
 
-unsigned char inBuff[40];
-unsigned char outBuff[40] = {0x84, 0xF0};
+char inBuff[40];
+char outBuff[40] = {0x84, 0xF0};
 int buffPos = 0;
 
 bool isConfigMode = false;
@@ -52,7 +52,7 @@ void loop() {
       delay(5);
     }
   }
-  else if(WiFi.status() == WL_CONNECTED){   // normal mode
+  else if(isConfigMode == false && WiFi.status() == WL_CONNECTED){   // normal mode
     if(millis() - updateTime >= 1000){
       outBuff[2] = 0x83;
       outBuff[3] = Firebase.getInt(UID + String("/RELAY1"));
@@ -66,7 +66,7 @@ void loop() {
 void checkReceiveCommand(){
   if(Serial.available()){
     while(Serial.available()){
-      inBuff[buffPos++] = (char) Serial.read();
+      inBuff[buffPos++] = (unsigned char) Serial.read();
       delay(2);
     }
   }
@@ -172,6 +172,10 @@ void connectWiFi(){
     Serial.println(WiFi.localIP());
   }
 #endif
+  outBuff[2] = 0x81;
+  outBuff[3] = 0x84;
+  outBuff[4] = WiFi.status();
+  sendCommand(outBuff, 5);
 }
 
 void processCommand(){
