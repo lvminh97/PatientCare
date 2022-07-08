@@ -1,10 +1,12 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'dart:collection';
 
+enum ScreenSelection {login, param, control}
+
 class Config{
   static String uid = "";
   static String email = "";
-  // static List<DatabaseReference> refs = [];
+  static ScreenSelection screen = ScreenSelection.login;
   static HashMap<String, DatabaseReference> refs = HashMap<String, DatabaseReference>();
   static List<String> paramName = ["Heart", "SpO2", "Air_Temp", "Air_Humi", "Body_Temp", "SOS", "RELAY1", "RELAY2"];
   static HashMap<String, int> params = HashMap<String, int>();

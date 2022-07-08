@@ -1,21 +1,18 @@
+// ignore_for_file: file_names, must_be_immutable, use_build_context_synchronously
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:patient_care/config.dart';
-import 'package:patient_care/screen/HomePage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+class LoginPage extends StatelessWidget{
 
-  @override
-  State<LoginPage> createState() => LoginPageState();
-}
-
-class LoginPageState extends State<LoginPage> {
-
+  late BuildContext _context;
   late TextEditingController _usernameTxtCtrl, _passwordTxtCtrl;
 
+  LoginPage({Key? key}) : super(key: key);
+  
   void _initLoginData() async{
     final prefs = await SharedPreferences.getInstance();
     _usernameTxtCtrl.text = prefs.getString("username")!;
@@ -42,8 +39,8 @@ class LoginPageState extends State<LoginPage> {
 
       EasyLoading.dismiss();
       Config.paramInit();
-      // ignore: use_build_context_synchronously
-      Navigator.push(context, MaterialPageRoute(builder: (context) => const HomePage()));
+      Navigator.pushReplacementNamed(_context, "/home");
+      Config.screen = ScreenSelection.param;
     } on FirebaseAuthException catch(e){
       // print("Login error: " + e.code);
       if(e.code == "user-not-found"){
@@ -57,7 +54,7 @@ class LoginPageState extends State<LoginPage> {
       }
       EasyLoading.dismiss();
       showDialog(
-        context: context, 
+        context: _context, 
         builder: (context) {
           return AlertDialog(
             title: const Text('Đăng nhập thất bại'),
@@ -77,15 +74,12 @@ class LoginPageState extends State<LoginPage> {
   }
 
   @override
-  void initState() {
-    super.initState();
+  Widget build(BuildContext context){
+    _context = context;
     _usernameTxtCtrl = TextEditingController();
     _passwordTxtCtrl = TextEditingController();
     _initLoginData();
-  }
 
-  @override
-  Widget build(BuildContext context){
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -125,16 +119,16 @@ class LoginPageState extends State<LoginPage> {
               Container(
                 margin: const EdgeInsets.all(10),
                 child: TextButton(
-                  onPressed: _login, 
+                  onPressed: _login,
+                  style: ButtonStyle( 
+                    foregroundColor: MaterialStateProperty.all<Color>(Colors.black),
+                    backgroundColor: MaterialStateProperty.all<Color>(Colors.blue)
+                  ), 
                   child: const Padding(
                     padding: EdgeInsets.fromLTRB(50, 10, 50, 10),
                     child: Text(
                       'Đăng nhập',
                     ),
-                  ),
-                  style: ButtonStyle( 
-                    foregroundColor: MaterialStateProperty.all<Color>(Colors.black),
-                    backgroundColor: MaterialStateProperty.all<Color>(Colors.blue)
                   ),
                 ),
               )
