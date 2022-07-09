@@ -5,7 +5,7 @@
 #include <MAX30100_PulseOximeter.h>
 #include <DHT.h>
 
-#define DEBUG true
+#define DEBUG false
 
 SoftwareSerial esp(ESP_TX, ESP_RX);
 LiquidCrystal LCD(LCD_RS, LCD_EN, LCD_D4, LCD_D5, LCD_D6, LCD_D7);
@@ -27,11 +27,15 @@ void setup(){
   Serial.begin(9600);
 #endif
   gpioInit();
+  
   LCD.begin(16, 2);
   LCD.print("Patient Care");
+  
   pox.begin();
-  pox.setIRLedCurrent(MAX30100_LED_CURR_7_6MA);
+  delay(500);
+  
   dht.begin();
+  
   esp.begin(9600);
   // Reset ESP
   outBuff[2] = 0x80;
@@ -43,6 +47,7 @@ void setup(){
   outBuff[2] = 0x80;
   outBuff[3] = 0x85;
   sendCommand(outBuff, 4);
+  
   lcd_update = 1;
 }
 
@@ -117,25 +122,26 @@ void lcdDisplay(){
   }
   else{
     if(cur_disp == 0){
-      LCD.clear();
       LCD.setCursor(0, 0);
       LCD.print("Heart: ");
       LCD.print(heart);
+      LCD.print("bpm       ");
       LCD.setCursor(0, 1);
       LCD.print("SpO2: ");
       LCD.print(spo2);
-      LCD.print("%");
+      LCD.print("%         ");
     }
     else if(cur_disp == 1){
-      LCD.clear();
       LCD.setCursor(0, 0);
       LCD.print("T: ");
       LCD.print(temp);
-      LCD.print(" H: ");
+      LCD.print("oC H: ");
       LCD.print(humi);
+      LCD.print("%     ");
       LCD.setCursor(0, 1);
       LCD.print("Body temp: ");
       LCD.print(body_temp);
+      LCD.print("oC     ");
     }
   }
 }
