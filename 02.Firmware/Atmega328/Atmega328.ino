@@ -32,7 +32,7 @@ void setup(){
   LCD.print("Patient Care");
   
   pox.begin();
-  delay(1000);
+  delay(2000);
   
   dht.begin();
   
@@ -53,11 +53,11 @@ void setup(){
 
 void loop(){
   checkReceiveCommand();
-  if(is_config_mode == 0){
-    pox.update();
-  }
   // 5ms tasks
   if(millis() - timer_5ms >= 5){
+    if(is_config_mode == 0){
+      pox.update();
+    }
     checkSOSBtn();
     checkCfgBtn();
     lcdDisplay();
