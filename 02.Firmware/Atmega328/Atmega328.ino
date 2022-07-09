@@ -19,12 +19,12 @@ unsigned char is_config_mode = 0, wifi_status = 0, lcd_update = 0;
 
 int heart, spo2, body_temp, temp, humi;
 
-unsigned char inBuff[20], outBuff[20] = {0x84, 0xF0};
+unsigned char inBuff[40], outBuff[40] = {0x84, 0xF0};
 int buffPos = 0;
 
 void setup(){
 #if DEBUG
-  Serial.begin(9600);
+  Serial.begin(115200);
 #endif
   gpioInit();
   
@@ -32,7 +32,7 @@ void setup(){
   LCD.print("Patient Care");
   
   pox.begin();
-  delay(500);
+  delay(1000);
   
   dht.begin();
   
@@ -65,8 +65,10 @@ void loop(){
   }
   // 1s tasks
   if(millis() - timer_1s >= 1000){
-    if(is_config_mode == 0)
+    if(is_config_mode == 0){
       updateHeartRateSpO2();
+      updateBodyTemp();
+    }
     timer_1s = millis();
   }
   // 5s tasks
@@ -80,29 +82,50 @@ void loop(){
 void updateHeartRateSpO2(){
   heart = pox.getHeartRate();
   spo2 = pox.getSpO2();
-  body_temp = analogRead(LM35) / 1023.0 * 500;
-  lcd_update = 1;
+
+  if(heart < 50 || spo2 > 100){
+    heart = 0;
+    spo2 = 0;
+  }
+  
+  if(cur_disp == 1)
+    lcd_update = 1;
+    
   if(wifi_status == 0x03 && is_config_mode == 0){
     outBuff[2] = 0x82;
     outBuff[3] = 0x82;
     outBuff[4] = (heart >> 8) & 0xFF;
     outBuff[5] = heart & 0xFF;
     outBuff[6] = spo2;
-    outBuff[7] = body_temp;
-    sendCommand(outBuff, 8);
+    sendCommand(outBuff, 7);
   }
 }
 
 void updateTempHumi(){
   temp = dht.readTemperature();
   humi = dht.readHumidity();
-  lcd_update = 1;
+  if(cur_disp == 0)
+    lcd_update = 1;
+    
   if(wifi_status == 0x03 && is_config_mode == 0){
     outBuff[2] = 0x82;
     outBuff[3] = 0x81;
     outBuff[4] = temp;
     outBuff[5] = humi;
     sendCommand(outBuff, 6);
+  }
+}
+
+void updateBodyTemp(){
+  body_temp = analogRead(LM35) / 1023.0 * 500;
+  if(cur_disp == 0)
+    lcd_update = 1;
+
+  if(wifi_status == 0x03 && is_config_mode == 0){
+    outBuff[2] = 0x82;
+    outBuff[3] = 0x84;
+    outBuff[4] = body_temp;
+    sendCommand(outBuff, 5);
   }
 }
 
@@ -123,16 +146,6 @@ void lcdDisplay(){
   else{
     if(cur_disp == 0){
       LCD.setCursor(0, 0);
-      LCD.print("Heart: ");
-      LCD.print(heart);
-      LCD.print("bpm       ");
-      LCD.setCursor(0, 1);
-      LCD.print("SpO2: ");
-      LCD.print(spo2);
-      LCD.print("%         ");
-    }
-    else if(cur_disp == 1){
-      LCD.setCursor(0, 0);
       LCD.print("T: ");
       LCD.print(temp);
       LCD.print("oC H: ");
@@ -142,6 +155,16 @@ void lcdDisplay(){
       LCD.print("Body temp: ");
       LCD.print(body_temp);
       LCD.print("oC     ");
+    }
+    else if(cur_disp == 1){
+      LCD.setCursor(0, 0);
+      LCD.print("Heart: ");
+      LCD.print(heart);
+      LCD.print("bpm       ");
+      LCD.setCursor(0, 1);
+      LCD.print("SpO2: ");
+      LCD.print(spo2);
+      LCD.print("%         ");
     }
   }
 }
@@ -189,14 +212,23 @@ void checkCfgBtn(){
 }
 
 void checkReceiveCommand(){
+  unsigned char c;
   if(esp.available()){
     while(esp.available()){
-      inBuff[buffPos++] = (unsigned char) esp.read();
-      delayMicroseconds(2500); 
+      c = (unsigned char) esp.read();
+      if(c == 0xF0 && buffPos > 1 && inBuff[buffPos - 1] == 0x84){
+        inBuff[0] = 0x84;
+        inBuff[1] = 0xF0;
+        buffPos = 2;
+      }
+      else if(c == 0xF1 && buffPos > 3 && inBuff[buffPos - 1] == 0x84){
+        processCommand();
+        buffPos = 0;
+      }
+      else{
+        inBuff[buffPos++] = c;
+      }
     }
-  }
-  if(buffPos != 0){
-    processCommand();
   }
 }
 
@@ -253,4 +285,6 @@ void sendCommand(unsigned char cmd[], int len){
   for(int i = 0; i < len; i++){
     esp.print((char) cmd[i]);
   }
+  esp.print((char) 0x84);
+  esp.print((char) 0xF1);
 }

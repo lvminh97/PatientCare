@@ -64,14 +64,23 @@ void loop() {
 }
 
 void checkReceiveCommand(){
+  char c;
   if(Serial.available()){
     while(Serial.available()){
-      inBuff[buffPos++] = (unsigned char) Serial.read();
-      delay(2);
+      c = (unsigned char) Serial.read();
+      if(c == 0xF0 && buffPos > 1 && inBuff[buffPos - 1] == 0x84){
+        inBuff[0] = 0x84;
+        inBuff[1] = 0xF0;
+        buffPos = 2;
+      }
+      else if(c == 0xF1 && buffPos > 3 && inBuff[buffPos - 1] == 0x84){
+        processCommand();
+        buffPos = 0;
+      }
+      else{
+        inBuff[buffPos++] = c;
+      }
     }
-  }
-  if(buffPos != 0){
-    processCommand();
   }
 }
 
@@ -221,13 +230,15 @@ void processCommand(){
           Firebase.setInt(UID + String("/Air_Temp"), inBuff[4]);
           Firebase.setInt(UID + String("/Air_Humi"), inBuff[5]); 
         }
-        else if(inBuff[3] == 0x82){   // Send Heart rate, SpO2 and Body temp to Firebase
+        else if(inBuff[3] == 0x82){   // Send Heart rate, SpO2 to Firebase
           Firebase.setInt(UID + String("/Heart"), (((int) inBuff[4]) << 8) | inBuff[5]);
           Firebase.setInt(UID + String("/SpO2"), inBuff[6]);
-          Firebase.setInt(UID + String("/Body_Temp"), inBuff[7]);
         }
         else if(inBuff[3] == 0x83){   // Send SOS status to Firebase
           Firebase.setInt(UID + String("/SOS"), inBuff[4]);
+        }
+        else if(inBuff[3] == 0x84){   // Send body temp to Firebase
+          Firebase.setInt(UID + String("/Body_Temp"), inBuff[4]);
         }
         break;
     }
@@ -239,4 +250,6 @@ void sendCommand(char cmd[], int len){
   for(int i = 0; i < len; i++){
     Serial.print(cmd[i]);
   }
+  Serial.print((char) 0x84);
+  Serial.print((char) 0xF1);
 }
