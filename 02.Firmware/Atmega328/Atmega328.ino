@@ -12,12 +12,13 @@ LiquidCrystal LCD(LCD_RS, LCD_EN, LCD_D4, LCD_D5, LCD_D6, LCD_D7);
 PulseOximeter  pox;
 DHT dht(DHT_PIN, DHT11);
 
-unsigned long timer_5ms, timer_1s = 0, timer_5s = 0;
+unsigned long timer_5ms, timer_50ms = 0, timer_1s = 0, timer_5s = 0;
 int sosbtn_cnt = 0, cfgbtn_cnt = 0;
 unsigned char sos_status = 0, cur_disp = 0;
 unsigned char is_config_mode = 0, wifi_status = 0, lcd_update = 0;
 
-int heart, spo2, body_temp, temp, humi;
+unsigned int heart, spo2, body_temp, temp, humi;
+unsigned int body_temp_sum = 0, body_temp_cnt = 0;
 
 unsigned char inBuff[40], outBuff[40] = {0x84, 0xF0};
 int buffPos = 0;
@@ -32,7 +33,6 @@ void setup(){
   LCD.print("Patient Care");
   
   pox.begin();
-  delay(2000);
   
   dht.begin();
   
@@ -63,6 +63,13 @@ void loop(){
     lcdDisplay();
     timer_5ms = millis();
   }
+  // 50ms tasks
+  if(millis() - timer_50ms >= 100){
+    if(is_config_mode == 0){
+      bodyTempSampling();
+    }
+    timer_50ms = millis();
+  }
   // 1s tasks
   if(millis() - timer_1s >= 1000){
     if(is_config_mode == 0){
@@ -83,10 +90,8 @@ void updateHeartRateSpO2(){
   heart = pox.getHeartRate();
   spo2 = pox.getSpO2();
 
-  if(heart < 50 || spo2 > 100){
-    heart = 0;
-    spo2 = 0;
-  }
+  if(spo2 > 100)
+    spo2 = 100;
   
   if(cur_disp == 1)
     lcd_update = 1;
@@ -116,8 +121,16 @@ void updateTempHumi(){
   }
 }
 
+void bodyTempSampling(){
+  body_temp_sum += analogRead(LM35) / 1023.0 * 500;
+  body_temp_cnt++;
+}
+
 void updateBodyTemp(){
-  body_temp = analogRead(LM35) / 1023.0 * 500;
+  body_temp = (float) body_temp_sum / body_temp_cnt;
+  body_temp_sum = 0;
+  body_temp_cnt = 0;
+  
   if(cur_disp == 0)
     lcd_update = 1;
 
