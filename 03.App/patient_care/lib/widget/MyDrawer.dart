@@ -51,7 +51,6 @@ class MyDrawer extends StatelessWidget{
             title: const Text('Giám sát'),
             leading: const Icon(Icons.home, size: 25),
             onTap: () {
-              Navigator.pop(context);
               if(_drawerSelection != DrawerSelection.param){
                 Navigator.pushReplacementNamed(context, "/home");
               }
@@ -62,7 +61,6 @@ class MyDrawer extends StatelessWidget{
             title: const Text('Điều khiển'),
             leading: const Icon(Icons.settings, size: 25),
             onTap: () {
-              Navigator.pop(context);
               if(_drawerSelection != DrawerSelection.control){
                 Navigator.pushReplacementNamed(context, "/control");
               }

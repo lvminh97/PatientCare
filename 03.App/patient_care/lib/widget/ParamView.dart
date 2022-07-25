@@ -35,7 +35,7 @@ class ParamView extends StatelessWidget{
       child: Row(
         children: [
           Container(
-            margin: const EdgeInsets.fromLTRB(0, 0, 20, 0),
+            margin: const EdgeInsets.fromLTRB(0, 0, 5, 0),
             child: Image(
               image: AssetImage(_img),
               width: 70,
