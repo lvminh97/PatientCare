@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
         '/login': (context) => LoginPage(),
         '/home': (context) => HomePage(),
         '/control': (context) => ControlPage(),
-        '/chart': (context) => ChartPage()
+        '/chart/heart': (context) => ChartPage()
       },
     );
   }

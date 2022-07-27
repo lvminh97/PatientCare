@@ -62,7 +62,8 @@ class HomePage extends StatelessWidget {
                       "Air_Temp",
                       "°C",
                       "Nhiệt độ",
-                      const [20, 10, 15, 20]
+                      const [20, 10, 15, 20],
+                      () { return; }
                     ),
                   ),
                   Expanded(
@@ -72,7 +73,8 @@ class HomePage extends StatelessWidget {
                       "Air_Humi",
                       "%",
                       "Độ ẩm",
-                      const [20, 10, 15, 20]
+                      const [20, 10, 15, 20],
+                      () { return; }
                     ),
                   )
                 ],
@@ -87,7 +89,10 @@ class HomePage extends StatelessWidget {
                       "Heart",
                       "",
                       "Nhịp tim",
-                      const [20, 10, 15, 20]
+                      const [20, 10, 15, 20],
+                      () {
+                        Navigator.pushReplacementNamed(_context, "/chart/heart");
+                      }
                     ),
                   ),
                   Expanded(
@@ -97,7 +102,8 @@ class HomePage extends StatelessWidget {
                       "SpO2",
                       "%",
                       "SpO2",
-                      const [20, 10, 15, 20]
+                      const [20, 10, 15, 20],
+                      () { return; }
                     )
                   )
                 ],
@@ -108,7 +114,8 @@ class HomePage extends StatelessWidget {
                 "Body_Temp",
                 "°C",
                 "Nhiệt độ cơ thể",
-                const [20, 10, 15, 20]
+                const [20, 10, 15, 20],
+                () { return; }
               ),
               // SOS status
               ParamView(
@@ -117,6 +124,7 @@ class HomePage extends StatelessWidget {
                 "",
                 "Tình trạng khẩn cấp",
                 const [20, 10, 15, 20],
+                () { return; },
                 type: "string",
                 altValue: const ["Không", "Có"],
               )

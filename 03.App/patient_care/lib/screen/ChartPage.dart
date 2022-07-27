@@ -1,6 +1,7 @@
 // ignore_for_file: file_names, must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:patient_care/widget/Header.dart';
 
 class ChartPage extends StatelessWidget {
 
@@ -10,15 +11,23 @@ class ChartPage extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: Center(
-        child: Column(
-          children: <Widget>[
+    _context = context;
 
-          ]
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.pushReplacementNamed(_context, "/home");
+        return false;
+      },
+      child: Scaffold(
+        appBar: AppBar(),
+        body: Center(
+          child: Column(
+            children: <Widget>[
+              MyHeader("Giám sát"),
+            ]
+          ),
         ),
-      ),
+      )
     );
   }
 }
