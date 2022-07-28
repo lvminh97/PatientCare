@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:patient_care/config.dart';
 
 // ignore: must_be_immutable
@@ -11,18 +12,23 @@ class ParamView extends StatelessWidget{
   List<double> _margins = [0, 0, 0, 0];
   String _type = "";
   List<String> _altValue = [];
+  void Function() _func = (){};
 
-  ParamView(String img, 
-  String paramName,
-  String unit,
-  String title,
-  List<double> margins, 
-  {String type = "int", List<String> altValue = const[], Key? key}): super(key: key) {
+  ParamView(
+    String img, 
+    String paramName,
+    String unit,
+    String title,
+    List<double> margins,
+    void Function() func, 
+    {String type = "int", List<String> altValue = const[], Key? key}): super(key: key) 
+  {
     _img = img;
     _paramName = paramName;
     _unit = unit;
     _title = title;
     _margins = margins;
+    _func = func;
     // optional params
     _type = type;
     _altValue = altValue;
@@ -35,12 +41,16 @@ class ParamView extends StatelessWidget{
       child: Row(
         children: [
           Container(
-            margin: const EdgeInsets.fromLTRB(0, 0, 20, 0),
-            child: Image(
-              image: AssetImage(_img),
-              width: 70,
-              height: 90,
-            ),
+            margin: const EdgeInsets.fromLTRB(0, 0, 5, 0),
+            child: TextButton(
+              onPressed: null,
+              onLongPress: _func,
+              child: Image(
+                image: AssetImage(_img),
+                width: 60,
+                height: 60,
+              ),
+            )
           ),
           Container(
             margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
