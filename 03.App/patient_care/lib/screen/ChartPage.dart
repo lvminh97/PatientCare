@@ -6,8 +6,11 @@ import 'package:patient_care/widget/Header.dart';
 class ChartPage extends StatelessWidget {
 
   late BuildContext _context;
+  String _type = "heart";
 
-  ChartPage({Key? key}) : super(key: key);
+  ChartPage(String type, {Key? key}) : super(key: key){
+    _type = type;
+  }
   
   @override
   Widget build(BuildContext context) {

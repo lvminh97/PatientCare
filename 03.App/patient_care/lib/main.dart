@@ -1,10 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:patient_care/screen/ChartPage.dart';
-import 'package:patient_care/screen/ControlPage.dart';
-import 'package:patient_care/screen/HomePage.dart';
-import 'package:patient_care/screen/LoginPage.dart';
+import 'package:patient_care/route.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,12 +24,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       builder: EasyLoading.init(),
       initialRoute: '/login',
-      routes: {
-        '/login': (context) => LoginPage(),
-        '/home': (context) => HomePage(),
-        '/control': (context) => ControlPage(),
-        '/chart/heart': (context) => ChartPage()
-      },
+      routes: MyRoute.getRoutes()
     );
   }
 }
