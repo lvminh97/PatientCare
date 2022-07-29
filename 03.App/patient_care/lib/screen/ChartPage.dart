@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:patient_care/widget/Header.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 class ChartPage extends StatelessWidget {
 
@@ -27,10 +28,48 @@ class ChartPage extends StatelessWidget {
           child: Column(
             children: <Widget>[
               MyHeader("Giám sát"),
+              Container(
+                margin: const EdgeInsets.only(top: 25),
+                child: Text(
+                  _type == "heart" ? "Biểu đồ nhịp tim" : "Biểu đồ SpO2",
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                )
+              ),
+              Container(
+                margin: const EdgeInsets.only(top: 20),
+                child: SfCartesianChart(
+                  primaryXAxis: CategoryAxis(),
+                  series: <LineSeries<Data, String>>[
+                    LineSeries<Data, String>(
+                      dataSource: <Data>[
+                        Data('Tom', 10),
+                        Data('Jane', 7),
+                        Data('Thor', 20),
+                        Data('Bill', 13)
+                      ],
+                      xValueMapper: (Data d, _) => d.name,
+                      yValueMapper: (Data d, _) => d.value
+                    )
+                  ]
+                ),
+              ) 
             ]
           ),
         ),
       )
     );
+  }
+}
+
+class Data{
+  String name = "";
+  int value = 0;
+
+  Data(String _name, int _value){
+    name = _name;
+    value = _value;
   }
 }
