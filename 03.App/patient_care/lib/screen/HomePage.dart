@@ -103,7 +103,9 @@ class HomePage extends StatelessWidget {
                       "%",
                       "SpO2",
                       const [20, 10, 15, 20],
-                      () { return; }
+                      () { 
+                        Navigator.pushReplacementNamed(_context, "/chart/spo2");
+                      }
                     )
                   )
                 ],
