@@ -1,8 +1,9 @@
 // ignore_for_file: file_names, must_be_immutable
 
-import 'dart:math';
-
+import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:patient_care/config.dart';
+import 'package:patient_care/model/DataPoint.dart';
 import 'package:patient_care/widget/Header.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
@@ -10,33 +11,20 @@ class ChartPage extends StatelessWidget {
 
   late BuildContext _context;
   String _type = "heart";
-  List<DataPoint> _data = [];
 
   ChartPage(String type, {Key? key}) : super(key: key){
     _type = type;
-  }
-  
-  void generateData(){
-    Random rng = Random();
-    int start = 1659694531, cnt = 0;
-    while(cnt < 100){
-      if(_type == "heart") {
-        _data.add(DataPoint(start, rng.nextInt(6) + 68));
-      } else {
-        _data.add(DataPoint(start, rng.nextInt(4) + 89));
-      }
-      start++;
-      cnt++;
-    }
   }
 
   @override
   Widget build(BuildContext context) {
     _context = context;
-    generateData();
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      (context as Element).markNeedsBuild();
+    });
     return WillPopScope(
       onWillPop: () async {
-        Navigator.pushReplacementNamed(_context, "/home");
+        Navigator.pushNamed(_context, "/home");
         return false;
       },
       child: Scaffold(
@@ -63,11 +51,11 @@ class ChartPage extends StatelessWidget {
                   ),
                   primaryYAxis: NumericAxis(
                     minimum: 0,
-                    maximum: _type == "heart" ? 120 : 100,
+                    maximum: _type == "heart" ? 250 : 100,
                   ),
                   series: [
                     LineSeries<DataPoint, int>(
-                      dataSource: _data,
+                      dataSource: _type == "heart" ? Config.heart_series : Config.spo2_series,
                       xValueMapper: (DataPoint d, _) => d.timestamp,
                       yValueMapper: (DataPoint d, _) => d.value,
                       color: Colors.red
@@ -80,15 +68,5 @@ class ChartPage extends StatelessWidget {
         ),
       )
     );
-  }
-}
-
-class DataPoint{
-  int timestamp = 0;
-  int value = 0;
-
-  DataPoint(int _ts, int _value){
-    timestamp = _ts;
-    value = _value;
   }
 }
