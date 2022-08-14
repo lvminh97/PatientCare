@@ -41,8 +41,8 @@ class ControlPage extends StatelessWidget {
                   top: 50
                 )
               ),
-              ControlButton("RELAY1", "Relay 1", const [20, 15]),
-              ControlButton("RELAY2", "Relay 2", const [20, 15])
+              ControlButton("RELAY1", "Đèn 1", const [20, 15]),
+              ControlButton("RELAY2", "Đèn 2", const [20, 15])
             ],
           ),
         ),

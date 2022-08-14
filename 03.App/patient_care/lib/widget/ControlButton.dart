@@ -37,7 +37,10 @@ class ControlButton extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.fromLTRB(40, 10, 40, 10),
               child: Text(
-                _title
+                _title,
+                style: const TextStyle(
+                  fontSize: 20
+                ),
               ),
             )
           ),
