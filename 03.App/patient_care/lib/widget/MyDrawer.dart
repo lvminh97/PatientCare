@@ -1,8 +1,7 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:patient_care/config.dart';
-import 'package:patient_care/screen/ControlPage.dart';
-import 'package:patient_care/screen/HomePage.dart';
-import 'package:patient_care/screen/LoginPage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
@@ -53,10 +52,7 @@ class MyDrawer extends StatelessWidget{
             leading: const Icon(Icons.home, size: 25),
             onTap: () {
               if(_drawerSelection != DrawerSelection.param){
-                Navigator.push(
-                  context, 
-                  MaterialPageRoute(builder: (context) => const HomePage())
-                );
+                Navigator.pushReplacementNamed(context, "/home");
               }
             },
           ),
@@ -66,10 +62,7 @@ class MyDrawer extends StatelessWidget{
             leading: const Icon(Icons.settings, size: 25),
             onTap: () {
               if(_drawerSelection != DrawerSelection.control){
-                Navigator.push(
-                  context, 
-                  MaterialPageRoute(builder: (context) => const ControlPage())
-                );
+                Navigator.pushReplacementNamed(context, "/control");
               }
             },
           ),
@@ -97,11 +90,7 @@ class MyDrawer extends StatelessWidget{
                       onPressed: () async {
                         final prefs = await SharedPreferences.getInstance();
                         await prefs.remove("password");
-                        // ignore: use_build_context_synchronously
-                        Navigator.push(
-                          context, 
-                          MaterialPageRoute(builder: (context) => const LoginPage())
-                        );
+                        Navigator.pushReplacementNamed(context, "/login");
                       }, 
                       child: const Text(
                         "Đăng xuất"

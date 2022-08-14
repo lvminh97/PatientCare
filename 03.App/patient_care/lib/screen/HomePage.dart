@@ -1,60 +1,49 @@
+// ignore_for_file: must_be_immutable, file_names
+
 import 'package:flutter/material.dart';
 import 'package:patient_care/config.dart';
 import 'package:patient_care/widget/Header.dart';
 import 'package:patient_care/widget/MyDrawer.dart';
 import 'package:patient_care/widget/ParamView.dart';
 
-class HomePage extends StatefulWidget {
-  
-  const HomePage({Key? key}): super(key: key);
+class HomePage extends StatelessWidget {
 
-  @override
-  State<StatefulWidget> createState() => HomePageState();
-}
+  late BuildContext _context;
 
-class HomePageState extends State<HomePage> {
-
-  @override
-  void initState(){
-    super.initState();
-    _initParams();
-  }
+  HomePage({Key? key}) : super(key: key);
 
   void _initParams(){
     Config.refs['Heart']!.onValue.listen((event) {
-      setState(() {
-        Config.params['Heart'] = int.parse(event.snapshot.value.toString());
-      });
+      Config.params['Heart'] = int.parse(event.snapshot.value.toString());
+      (_context as Element).markNeedsBuild();
     });
     Config.refs['SpO2']!.onValue.listen((event) {
-      setState(() {
-        Config.params['SpO2'] = int.parse(event.snapshot.value.toString());
-      });
+      Config.params['SpO2'] = int.parse(event.snapshot.value.toString());
+      (_context as Element).markNeedsBuild();
     });
     Config.refs['Air_Temp']!.onValue.listen((event) {
-      setState(() {
-        Config.params['Air_Temp'] = int.parse(event.snapshot.value.toString());
-      });
+      Config.params['Air_Temp'] = int.parse(event.snapshot.value.toString());
+      (_context as Element).markNeedsBuild();
     });
     Config.refs['Air_Humi']!.onValue.listen((event) {
-      setState(() {
-        Config.params['Air_Humi'] = int.parse(event.snapshot.value.toString());
-      });
+      Config.params['Air_Humi'] = int.parse(event.snapshot.value.toString());
+      (_context as Element).markNeedsBuild();
     });
     Config.refs['Body_Temp']!.onValue.listen((event) {
-      setState(() {
-        Config.params['Body_Temp'] = int.parse(event.snapshot.value.toString());
-      });
+      Config.params['Body_Temp'] = int.parse(event.snapshot.value.toString());
+      (_context as Element).markNeedsBuild();
     });
     Config.refs['SOS']!.onValue.listen((event) {
-      setState(() {
-        Config.params['SOS'] = int.parse(event.snapshot.value.toString());
-      });
+      Config.params['SOS'] = int.parse(event.snapshot.value.toString());
+      (_context as Element).markNeedsBuild();
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    _context = context;
+    _initParams();
+
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -73,7 +62,8 @@ class HomePageState extends State<HomePage> {
                       "Air_Temp",
                       "°C",
                       "Nhiệt độ",
-                      const [20, 10, 15, 20]
+                      const [20, 10, 15, 20],
+                      () { return; }
                     ),
                   ),
                   Expanded(
@@ -83,7 +73,8 @@ class HomePageState extends State<HomePage> {
                       "Air_Humi",
                       "%",
                       "Độ ẩm",
-                      const [20, 10, 15, 20]
+                      const [20, 10, 15, 20],
+                      () { return; }
                     ),
                   )
                 ],
@@ -98,7 +89,10 @@ class HomePageState extends State<HomePage> {
                       "Heart",
                       "",
                       "Nhịp tim",
-                      const [20, 10, 15, 20]
+                      const [20, 10, 15, 20],
+                      () {
+                        Navigator.pushReplacementNamed(_context, "/chart/heart");
+                      }
                     ),
                   ),
                   Expanded(
@@ -108,7 +102,10 @@ class HomePageState extends State<HomePage> {
                       "SpO2",
                       "%",
                       "SpO2",
-                      const [20, 10, 15, 20]
+                      const [20, 10, 15, 20],
+                      () { 
+                        Navigator.pushReplacementNamed(_context, "/chart/spo2");
+                      }
                     )
                   )
                 ],
@@ -119,7 +116,8 @@ class HomePageState extends State<HomePage> {
                 "Body_Temp",
                 "°C",
                 "Nhiệt độ cơ thể",
-                const [20, 10, 15, 20]
+                const [20, 10, 15, 20],
+                () { return; }
               ),
               // SOS status
               ParamView(
@@ -128,6 +126,7 @@ class HomePageState extends State<HomePage> {
                 "",
                 "Tình trạng khẩn cấp",
                 const [20, 10, 15, 20],
+                () { return; },
                 type: "string",
                 altValue: const ["Không", "Có"],
               )

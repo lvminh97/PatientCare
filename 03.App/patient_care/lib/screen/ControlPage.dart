@@ -1,40 +1,33 @@
+// ignore_for_file: must_be_immutable, file_names
+
 import 'package:flutter/material.dart';
 import 'package:patient_care/config.dart';
 import 'package:patient_care/widget/ControlButton.dart';
 import 'package:patient_care/widget/Header.dart';
 import 'package:patient_care/widget/MyDrawer.dart';
 
-class ControlPage extends StatefulWidget {
-  
-  const ControlPage({Key? key}): super(key: key);
+class ControlPage extends StatelessWidget {
 
-  @override
-  State<StatefulWidget> createState() => ControlPageState();
-}
+  late BuildContext _context;
 
-class ControlPageState extends State<ControlPage> {
-
-  @override
-  void initState(){
-    super.initState();
-    _initParams();
-  }
+  ControlPage({Key? key}) : super(key: key);
 
   void _initParams(){
     Config.refs['RELAY1']!.onValue.listen((event) {
-      setState(() {
-        Config.params['RELAY1'] = int.parse(event.snapshot.value.toString());
-      });
+      Config.params['RELAY1'] = int.parse(event.snapshot.value.toString());
+      (_context as Element).markNeedsBuild();
     });
     Config.refs['RELAY2']!.onValue.listen((event) {
-      setState(() {
-        Config.params['RELAY2'] = int.parse(event.snapshot.value.toString());
-      });
+      Config.params['RELAY2'] = int.parse(event.snapshot.value.toString());
+      (_context as Element).markNeedsBuild();
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    _context = context;
+    _initParams();
+
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -48,8 +41,8 @@ class ControlPageState extends State<ControlPage> {
                   top: 50
                 )
               ),
-              ControlButton("RELAY1", "Relay 1", const [20, 15]),
-              ControlButton("RELAY2", "Relay 2", const [20, 15])
+              ControlButton("RELAY1", "Đèn 1", const [20, 15]),
+              ControlButton("RELAY2", "Đèn 2", const [20, 15])
             ],
           ),
         ),
